@@ -32,15 +32,15 @@ namespace SocketName
             Console.WriteLine("Premi un tasto per continuare...");
             Console.ReadKey();
 
-            Sender s = new Sender();
-            Thread st = new Thread(s.entryPoint);
-            st.Start();
+            //Sender s = new Sender();
+            //Thread st = new Thread(s.entryPoint);
+            //st.Start();
 
-            /*
-            Receiver r = new Receiver(myIP);
+            
+            Receiver r = new Receiver();
             Thread rt = new Thread(r.entryPoint);
             rt.Start();
-            */
+            
         }
     }
 }

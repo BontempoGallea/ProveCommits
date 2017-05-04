@@ -27,7 +27,7 @@ namespace SocketName
         private void Receive()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
+            
             IPEndPoint ipep = new IPEndPoint(IPAddress.Any, _port);
             s.Bind(ipep);
             s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicastIp, IPAddress.Any));
