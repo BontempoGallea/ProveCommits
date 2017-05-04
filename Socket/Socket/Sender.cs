@@ -11,7 +11,6 @@ namespace SocketName
 {
     class Sender
     {
-        IPAddress _multicastIp = IPAddress.Parse("192.168.1.255");
         int _port = 15000;
 
         public void entryPoint()
@@ -22,7 +21,7 @@ namespace SocketName
         private void send()
         {
             UdpClient client = new UdpClient();
-            IPEndPoint ipEP = new IPEndPoint(IPAddress.Parse("192.168.1.255"), _port);
+            IPEndPoint ipEP = new IPEndPoint(IPAddress.Broadcast, _port);
             byte[] data = Encoding.ASCII.GetBytes("Data sent!");
 
             while (true)

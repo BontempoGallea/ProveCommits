@@ -11,15 +11,9 @@ namespace SocketName
 {
     class Receiver
     {
-        IPAddress _multicastIp = IPAddress.Parse("224.5.6.7");
         int _port = 15000;
 
         public void entryPoint()
-        {
-            startListening();
-        }
-
-        private void startListening()
         {
             Receive();
         }
@@ -35,7 +29,7 @@ namespace SocketName
             {
                 Console.WriteLine("Waiting for packet to arrive: ...");
                 data = client.Receive(ref ipEP);
-                Console.WriteLine("Packet received: <<<" + Encoding.ASCII.GetString(data) + " >>>");
+                Console.WriteLine("Packet received: <<< " + Encoding.ASCII.GetString(data) + " >>>");
             }
         }
     }
