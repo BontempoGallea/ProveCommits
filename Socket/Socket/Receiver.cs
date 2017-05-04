@@ -11,15 +11,9 @@ namespace SocketName
 {
     class Receiver
     {
-        private readonly UdpClient uc = new UdpClient();
-        private static int _port = 15000;
-        private static IPAddress _multicast = IPAddress.Parse("224.168.100.2");
-        private static IPAddress myip;
-        private static EndPoint mipep;
-        public Receiver(IPAddress a)
-        {
-            myip = a;
-        }
+        IPAddress _multicastIp = IPAddress.Parse("224.5.6.7");
+        int _port = 15000;
+
         public void entryPoint()
         {
             startListening();
@@ -27,27 +21,24 @@ namespace SocketName
 
         private void startListening()
         {
-
-          Receive();
+            Receive();
         }
 
         private void Receive()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPEndPoint ipEP = new IPEndPoint(myip, _port);
 
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, _port);
+            s.Bind(ipep);
+            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicastIp, IPAddress.Any));
 
-            s.Bind(ipEP);
+            byte[] data = new byte[1024];
 
-            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicast, IPAddress.Any));
-            IPEndPoint groupEP = new IPEndPoint(_multicast, _port);
-            EndPoint remoteEP = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
-                byte[] data = new byte[1024];
-                s.ReceiveFrom(data, ref remoteEP);
-                string str = Encoding.ASCII.GetString(data, 0, data.Length);
-                Console.WriteLine("Data received: " + str);
+                Console.WriteLine("Waiting for packet to arrive: ...");
+                s.Receive(data);
+                Console.WriteLine("Packet received: <<<" + Encoding.ASCII.GetString(data) + " >>>");
             }
         }
     }
