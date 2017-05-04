@@ -10,25 +10,22 @@ namespace Socket
 {
     class Receiver
     {
-        private readonly UdpClient uc = new UdpClient();
+        private readonly UdpClient uc = new UdpClient(15000);
 
         public void entryPoint()
         {
-            
+            receivePacket();
         }
 
-        private void startListening()
+        private void receivePacket()
         {
-            this.uc.BeginReceive(Receive, new object());
-        }
-
-        private void Receive(IAsyncResult ar)
-        {
-            IPEndPoint ip = new IPEndPoint(IPAddress.Any, 15000);
-            byte[] data = uc.EndReceive(ar, ref ip);
+            IPEndPoint ip = new IPEndPoint(IPAddress.Any, 0);
+            byte[] data = uc.Receive(ref ip);
             string message = Encoding.ASCII.GetString(data);
             Console.WriteLine("I've received this datagram: " + message);
-            //startListening();
+            Console.WriteLine("premi bottone:\n " );
+            Console.ReadKey();
+            entryPoint();
         }
     }
 }
