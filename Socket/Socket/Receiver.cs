@@ -12,7 +12,7 @@ namespace SocketName
     {
         private readonly UdpClient uc = new UdpClient();
         private static int _port = 15000;
-        private static IPAddress _multicast = IPAddress.Parse("224.5.6.7");
+        private static IPAddress _multicast = IPAddress.Parse("224.168.100.2");
 
         public void entryPoint()
         {
@@ -27,7 +27,7 @@ namespace SocketName
         private void Receive()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPEndPoint ipEP = new IPEndPoint(IPAddress.Any, _port);
+            IPEndPoint ipEP = new IPEndPoint(Dns.GetHostAddresses(Dns.GetHostName()).Where(i => i.AddressFamily == AddressFamily.InterNetwork).First(), _port);
             s.Bind(ipEP);
             
             s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicast, IPAddress.Any));

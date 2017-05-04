@@ -12,7 +12,7 @@ namespace SocketName
     class Sender
     {
         UdpClient uc = new UdpClient();
-        IPAddress _multicastIp = IPAddress.Parse("224.5.6.7");
+        IPAddress _multicastIp = IPAddress.Parse("224.168.100.2");
         int _port = 15000;
 
         public void entryPoint()
@@ -29,9 +29,9 @@ namespace SocketName
                 {
                     mSendSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
                                        new MulticastOption(_multicastIp, localIp));
-                    mSendSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 255);
-                    mSendSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-                    mSendSocket.MulticastLoopback = true;
+                    //mSendSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 255);
+                    //mSendSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                    //mSendSocket.MulticastLoopback = true;
                     mSendSocket.Bind(new IPEndPoint(ipToUse, _port));
 
                     while (true)
