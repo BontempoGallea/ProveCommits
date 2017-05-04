@@ -15,7 +15,6 @@ namespace SocketName
         private static int _port = 15000;
         private static IPAddress _multicast = IPAddress.Parse("224.168.100.2");
         private static IPAddress myip;
-        private static EndPoint mipep;
 
         public Receiver(IPAddress a)
         {
@@ -38,7 +37,7 @@ namespace SocketName
             IPEndPoint ipEP = new IPEndPoint(myip, _port);
             s.Bind(ipEP);
 
-            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicast, IPAddress.Any));
+            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicast, myip));
             IPEndPoint groupEP = new IPEndPoint(_multicast, _port);
             EndPoint remoteEP = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
             while (true)

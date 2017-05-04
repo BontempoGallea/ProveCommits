@@ -32,14 +32,14 @@ namespace SocketName
             Console.ReadKey();
 
             Sender s = new Sender();
-            Receiver r = new Receiver(myIP);
-
             Thread st = new Thread(s.entryPoint);
             st.Start();
 
-            //Thread rt = new Thread(r.entryPoint);
-            //rt.Start();
-
+            /*
+            Receiver r = new Receiver(myIP);
+            Thread rt = new Thread(r.entryPoint);
+            rt.Start();
+            */
         }
     }
 }
