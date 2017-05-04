@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace Socket
+namespace SocketName
 {
     class Program
     {
@@ -32,13 +32,13 @@ namespace Socket
             Console.ReadKey();
 
             Sender s = new Sender();
-            Receiver r = new Receiver();
+            //Receiver r = new Receiver();
 
             Thread st = new Thread(s.entryPoint);
             st.Start();
 
-            Thread rt = new Thread(r.entryPoint);
-            rt.Start();
+            //Thread rt = new Thread(r.entryPoint);
+            //rt.Start();
 
         }
     }
