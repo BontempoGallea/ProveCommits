@@ -4,23 +4,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace Socket
 {
     class Program
     {
+        private static IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+        private static IPAddress myIP = null;
+
         static void Main(string[] args)
         {
-            IPAddress a1 = new IPAddress(new byte[] { 100, 101, 102, 103 });
-            IPAddress a2 = IPAddress.Parse("100.101.102.103");
-            IPAddress a3 = IPAddress.Parse("[3ADE:4567:890A:9:8:1:ADFE:7]");
-            IPEndPoint ep1 = new IPEndPoint(a1, 2000);
+            // Mi cerco il mio indirizzo IPv4
+            foreach(var ip in host.AddressList)
+            {
+                Console.WriteLine("Ip address: " + ip.ToString() +
+                                   " --- family: " + ip.AddressFamily);
+                if(ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    myIP = ip;
+                }
+            }
 
-            Console.WriteLine(a1.Equals(a2));
-            Console.WriteLine(a1 + " family: " + a1.AddressFamily);
-            Console.WriteLine(a3.AddressFamily);
-            Console.WriteLine(ep1.ToString());
+            Console.WriteLine("My ip address is ---> " + myIP.ToString());
+            Console.Write("Premi un tasto per continuare...");
             Console.ReadKey();
+
+            Sender s = new Sender();
+            Receiver r = new Receiver();
+
+            Thread st = new Thread(s.entryPoint);
+            st.Start();
+
+            Thread rt = new Thread(r.entryPoint);
+            rt.Start();
+
         }
     }
 }
