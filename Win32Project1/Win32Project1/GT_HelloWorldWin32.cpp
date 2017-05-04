@@ -1,0 +1,1 @@
+#include "GT_HelloWorldWin32.h"
