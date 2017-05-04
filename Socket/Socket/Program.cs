@@ -27,24 +27,20 @@ namespace SocketName
                 }
             }
 
+            //myIP = IPAddress.Parse("192.168.1.112");
             Console.WriteLine("My ip address is ---> " + myIP.ToString());
-            Console.Write("Premi un tasto per continuare...");
+            Console.WriteLine("Premi un tasto per continuare...");
             Console.ReadKey();
 
+            Sender s = new Sender();
+            Thread st = new Thread(s.entryPoint);
+            st.Start();
 
-         //   Sender s = new Sender();
+            /*
             Receiver r = new Receiver(myIP);
-
-          //  Sender s = new Sender();
-            //Receiver r = new Receiver();
-
-
-           // Thread st = new Thread(s.entryPoint);
-          //  st.Start();
-
             Thread rt = new Thread(r.entryPoint);
             rt.Start();
-
+            */
         }
     }
 }
