@@ -36,11 +36,9 @@ namespace SocketName
             Thread st = new Thread(s.entryPoint);
             st.Start();
 
-            /*
-            Receiver r = new Receiver(myIP);
+            Receiver r = new Receiver();
             Thread rt = new Thread(r.entryPoint);
             rt.Start();
-            */
         }
     }
 }
