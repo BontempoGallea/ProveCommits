@@ -11,7 +11,7 @@ namespace SocketName
 {
     class Sender
     {
-        IPAddress _multicastIp = IPAddress.Parse("224.5.6.7");
+        IPAddress _multicastIp = IPAddress.Parse("192.168.1.255");
         int _port = 15000;
 
         public void entryPoint()
@@ -21,18 +21,15 @@ namespace SocketName
 
         private void send()
         {
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicastIp));
-            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 2); // 2 represents the TTL
-
-            IPEndPoint ipEP = new IPEndPoint(_multicastIp, _port); s.Connect(ipEP);
-
+            UdpClient client = new UdpClient();
+            IPEndPoint ipEP = new IPEndPoint(IPAddress.Parse("192.168.1.255"), _port);
             byte[] data = Encoding.ASCII.GetBytes("Data sent!");
 
             while (true)
             {
-                s.Send(data, data.Length, SocketFlags.None);
-                Console.WriteLine("I just sent a packet: <<< " + Encoding.ASCII.GetString(data) + " >>> --->" + s.LocalEndPoint.ToString());
+                client.Send(data, data.Length, ipEP);
+                Console.WriteLine("I just sent a packet: <<< " + Encoding.ASCII.GetString(data) + " >>> ---> " + ipEP.ToString());
+                Thread.Sleep(5000);
             }
         }
     }

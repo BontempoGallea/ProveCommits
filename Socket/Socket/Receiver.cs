@@ -26,18 +26,15 @@ namespace SocketName
 
         private void Receive()
         {
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, _port);
-            s.Bind(ipep);
-            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicastIp, IPAddress.Any));
+            UdpClient client = new UdpClient(_port);
+            IPEndPoint ipEP = new IPEndPoint(IPAddress.Any, _port);
 
             byte[] data = new byte[1024];
 
             while (true)
             {
                 Console.WriteLine("Waiting for packet to arrive: ...");
-                s.Receive(data);
+                data = client.Receive(ref ipEP);
                 Console.WriteLine("Packet received: <<<" + Encoding.ASCII.GetString(data) + " >>>");
             }
         }
