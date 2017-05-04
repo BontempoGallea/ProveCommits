@@ -31,19 +31,19 @@ namespace SocketName
             Console.Write("Premi un tasto per continuare...");
             Console.ReadKey();
 
-<<<<<<< HEAD
+
          //   Sender s = new Sender();
-            Receiver r = new Receiver();
-=======
-            Sender s = new Sender();
+            Receiver r = new Receiver(myIP);
+
+          //  Sender s = new Sender();
             //Receiver r = new Receiver();
->>>>>>> refs/remotes/origin/master
+
 
            // Thread st = new Thread(s.entryPoint);
           //  st.Start();
 
-            //Thread rt = new Thread(r.entryPoint);
-            //rt.Start();
+            Thread rt = new Thread(r.entryPoint);
+            rt.Start();
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,53 +11,44 @@ namespace SocketName
 {
     class Receiver
     {
-<<<<<<< HEAD
-        private readonly UdpClient uc = new UdpClient(15000);
-
-        public void entryPoint()
-        {
-            receivePacket();
-=======
         private readonly UdpClient uc = new UdpClient();
         private static int _port = 15000;
-        private static IPAddress _multicast = IPAddress.Parse("224.5.6.7");
-
+        private static IPAddress _multicast = IPAddress.Parse("224.168.100.2");
+        private static IPAddress myip;
+        private static EndPoint mipep;
+        public Receiver(IPAddress a)
+        {
+            myip = a;
+        }
         public void entryPoint()
         {
             startListening();
->>>>>>> refs/remotes/origin/master
         }
 
-        private void receivePacket()
+        private void startListening()
         {
-<<<<<<< HEAD
-            IPEndPoint ip = new IPEndPoint(IPAddress.Any, 0);
-            byte[] data = uc.Receive(ref ip);
-            string message = Encoding.ASCII.GetString(data);
-            Console.WriteLine("I've received this datagram: " + message);
-            Console.WriteLine("premi bottone:\n " );
-            Console.ReadKey();
-            entryPoint();
-=======
-            this.uc.BeginReceive(Receive, new object());
+
+          Receive();
         }
 
-        private void Receive(IAsyncResult ar)
+        private void Receive()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPEndPoint ipEP = new IPEndPoint(IPAddress.Any, _port);
-            s.Bind(ipEP);
-            
-            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicast, IPAddress.Any));
+            IPEndPoint ipEP = new IPEndPoint(myip, _port);
 
+
+            s.Bind(ipEP);
+
+            s.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(_multicast, IPAddress.Any));
+            IPEndPoint groupEP = new IPEndPoint(_multicast, _port);
+            EndPoint remoteEP = (EndPoint)new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
                 byte[] data = new byte[1024];
-                s.Receive(data);
+                s.ReceiveFrom(data, ref remoteEP);
                 string str = Encoding.ASCII.GetString(data, 0, data.Length);
                 Console.WriteLine("Data received: " + str);
             }
->>>>>>> refs/remotes/origin/master
         }
     }
 }
