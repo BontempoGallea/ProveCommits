@@ -32,9 +32,9 @@ namespace SocketName
             Console.WriteLine("Premi un tasto per continuare...");
             Console.ReadKey();
 
-            Sender s = new Sender();
+            /*Sender s = new Sender();
             Thread st = new Thread(s.entryPoint);
-            st.Start();
+            st.Start();*/
 
             Receiver r = new Receiver();
             Thread rt = new Thread(r.entryPoint);

@@ -20,7 +20,7 @@ namespace SocketName
 
         private void Receive()
         {
-            UdpClient client = new UdpClient(16000);
+            UdpClient client = new UdpClient(_port);
             IPEndPoint ipEP = new IPEndPoint(IPAddress.Any, _port);
 
             byte[] data = new byte[1024];
