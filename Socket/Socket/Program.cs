@@ -31,14 +31,19 @@ namespace SocketName
             Console.Write("Premi un tasto per continuare...");
             Console.ReadKey();
 
-            Sender s = new Sender();
+
+         //   Sender s = new Sender();
+            Receiver r = new Receiver(myIP);
+
+          //  Sender s = new Sender();
             //Receiver r = new Receiver();
 
-            Thread st = new Thread(s.entryPoint);
-            st.Start();
 
-            //Thread rt = new Thread(r.entryPoint);
-            //rt.Start();
+           // Thread st = new Thread(s.entryPoint);
+          //  st.Start();
+
+            Thread rt = new Thread(r.entryPoint);
+            rt.Start();
 
         }
     }
