@@ -34,10 +34,14 @@ namespace SocketName
                     mSendSocket.MulticastLoopback = true;
                     mSendSocket.Bind(new IPEndPoint(ipToUse, _port));
 
-                    byte[] data = Encoding.ASCII.GetBytes("Data sent!");
-                    var ipEP = new IPEndPoint(_multicastIp, _port);
-                    mSendSocket.SendTo(data, ipEP);
-                    Console.WriteLine("I've sent some data. --- " + data.ToString() + " ---> " + _multicastIp.Address.ToString());
+                    while (true)
+                    {
+                        byte[] data = Encoding.ASCII.GetBytes("Data sent!");
+                        var ipEP = new IPEndPoint(_multicastIp, _port);
+                        mSendSocket.SendTo(data, ipEP);
+                        Console.WriteLine("I've sent some data. --- " + Encoding.ASCII.GetString(data) + " ---> " + _multicastIp.ToString());
+                        Thread.Sleep(5000);
+                    }
                 }
                 
             }

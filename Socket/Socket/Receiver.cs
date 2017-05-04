@@ -21,10 +21,10 @@ namespace SocketName
 
         private void startListening()
         {
-            this.uc.BeginReceive(Receive, new object());
+            Receive();
         }
 
-        private void Receive(IAsyncResult ar)
+        private void Receive()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPEndPoint ipEP = new IPEndPoint(IPAddress.Any, _port);
