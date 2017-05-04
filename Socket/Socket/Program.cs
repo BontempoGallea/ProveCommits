@@ -27,8 +27,9 @@ namespace SocketName
                 }
             }
 
+            //myIP = IPAddress.Parse("192.168.1.112");
             Console.WriteLine("My ip address is ---> " + myIP.ToString());
-            Console.Write("Premi un tasto per continuare...");
+            Console.WriteLine("Premi un tasto per continuare...");
             Console.ReadKey();
 
             Sender s = new Sender();
